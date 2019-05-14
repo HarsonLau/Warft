@@ -5,29 +5,24 @@ import java.util.List;
 
 public class Warft
 {
-    private:
 
-    WarftMap allMap;
-    Timer preTime;
+    private WarftMap allMap;
+    private Timer preTime;
 
     //新棋子的生成请求
-    List<Request> Red_callRequest;
-    List <Request> Blue_callRequest;
+    private List<Request> Red_callRequest;
+    private List <Request> Blue_callRequest;
 
     //给新棋子分配的id
-    int newChessId_r;
-    int newChessId_b;
+    private int newChessId_r;
+    private int newChessId_b;
 
-    //两个阵营的生命元
-    int energy_r;
-    int energy_b;
     public static void main(String[] args)
     {
         return;
     }
 
-    public:
-    int run(){
+    public int run(){
         //先初始化棋盘和时间，随时间增长生命元
         //分别去读两个Request的list，创建棋子
         //在地图上部署棋子。
@@ -43,6 +38,6 @@ public class Warft
         return 0;
     }
 
-    int insertRequest(int color, Request rq){return 0;}	//返回是否能成功添加请求
+    public int insertRequest(int color, Request rq){return 0;}	//返回是否能成功添加请求
 
-};
+}
