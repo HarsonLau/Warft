@@ -17,6 +17,7 @@ public class WarftMap
     private int energy_r;
     private int energy_b;
 
+    private int winner;
     /*构造函数*/
     WarftMap(){
         smap=new int[6][10];
@@ -30,6 +31,7 @@ public class WarftMap
         Red_Armies=new HashMap<>();
         Blue_Armies=new HashMap<>();
         energy_r=energy_b=800;
+        winner=-1;
     }
 
     /*给坐标为(x,y)的城市增加value个生命元*/
@@ -295,6 +297,63 @@ public class WarftMap
                 Red_Armies.put(rid,rChess);
                 Blue_Armies.remove(bid);
                 Blue_Armies.put(bid,bChess);
+            }
+        }
+    }
+
+    /*返回这局游戏的胜利者,-1代表尚未产生,0代表红方,1代表蓝方,2代表平局*/
+    public int getWinner(){
+        boolean rWin=false;
+        boolean bWin=false;
+        for(int i=0;i<6;i++){
+            int rid=getChessId(i,9,0);
+            if(rid!=0){
+                Chess rChess =getChess(rid,0);
+                if(rChess.alive)
+                    rWin=true;
+            }
+            if(rWin)
+                break;
+        }
+        for (int i=0;i<6;i++){
+            int bid=getChessId(i,0,1);
+            if(bid!=0){
+                Chess bChess=getChess(bid,1);
+                if(bChess.alive)
+                    bWin=true;
+            }
+            if(bWin)
+                break;
+        }
+        if(bWin&&rWin)
+            return 2;
+        if(bWin&&!rWin)
+            return 1;
+        if(rWin&&!bWin)
+            return 0;
+        return -1;
+    }
+
+    /*清除战场上的尸体*/
+    public void Clean(){
+        for(int i=0;i<6;i++){
+            for(int j=1;j<=8;j++){
+                int rid=getChessId(i,j,0);
+                int bid=getChessId(i,j,1);
+                if(rid!=0){
+                    Chess rChess=getChess(rid,0);
+                    if(!rChess.alive){
+                        removeChess(i,j,0);
+                        Red_Armies.remove(rid);
+                    }
+                }
+                if(bid!=0){
+                    Chess bChess=getChess(bid,1);
+                    if(!bChess.alive){
+                        removeChess(i,j,1);
+                        Blue_Armies.remove(bid);
+                    }
+                }
             }
         }
     }

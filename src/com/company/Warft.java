@@ -1,43 +1,56 @@
 package com.company;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Warft
 {
 
     private WarftMap allMap;
-    private Timer preTime;
-
-    //新棋子的生成请求
-    private List<Request> Red_callRequest;
-    private List <Request> Blue_callRequest;
 
     //给新棋子分配的id
     private int newChessId_r;
     private int newChessId_b;
 
-    public static void main(String[] args)
-    {
-        return;
+    Warft(){
+        allMap=new WarftMap();
+        newChessId_b=newChessId_r=1;
     }
 
-    public int run(){
-        //先初始化棋盘和时间，随时间增长生命元
-        //分别去读两个Request的list，创建棋子
-        //在地图上部署棋子。
-        //遍历每个棋子，根据时间进行特殊操作。
-        //
-        //遍历每个棋子，调用attack()函数，在攻击函数中使用武器的use()
-        //进行攻击，但是不管是否死亡均会进行攻击，如果死亡则修改live标记
-        //
-        //然后对于每个棋子如果死亡，则删除棋子（从list中），然后再
-        //从地图上移除棋子,如果未死亡，则棋子向前移动。
-        //
-        //移动之后，判断胜利条件
+    public int main(String[] args)
+    {
+        while(true){
+            allMap.allMarch();//前进
+            if(judge())//如果裁判宣布游戏结束那就跳出循环
+                break;
+            allMap.allCityGrow();//所有城市产生生命元
+            allMap.allSingleChessGain();//如果某个城市只有一个武士,该武士获得生命元
+            allMap.allShoot();//放箭
+            allMap.allBomb();//使用炸弹
+            allMap.allFight();//战斗
+            allMap.allAfterBattle();//战斗之后,赢的武士收生命元武器,整理武器,输的只整理武器
+            allMap.Clean();//清除尸体
+        }
         return 0;
     }
-
-    public int insertRequest(int color, Request rq){return 0;}	//返回是否能成功添加请求
-
+    private boolean judge(){
+        int winner=allMap.getWinner();
+        if(winner==-1)
+            return false;
+        else{
+            switch(winner){//裁判宣布结果.
+                case 0:
+                    System.out.println("红方获胜");
+                    break;
+                case 1:
+                    System.out.println("蓝方获胜");
+                    break;
+                    default:
+                        System.out.println("平局");
+                        break;
+            }
+            return true;
+        }
+    }
 }
