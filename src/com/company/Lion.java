@@ -1,13 +1,14 @@
 package com.company;
 
 public class Lion extends Chess {
-    int loyaty=80;
+    int loyaty;
     Lion(int _id,int _color){
         super();
         id=_id;
         kind=2;
         Harm=100;
         hp=maxhp=250;
+        loyaty=60;
         color=_color;
         haveArrow=haveBomb=haveSword=true;
         arrWeapon[0]=new Sword(Harm);
