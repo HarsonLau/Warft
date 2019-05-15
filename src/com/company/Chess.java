@@ -95,6 +95,11 @@ abstract public class Chess{
         return GainLifeElements(all);
     }
 
+    /*平局之后要做的事情*/
+    public void AfterDraw(){
+        checkWeapons();
+    }
+
     public Chess UseBomb(Chess opponent){
         opponent.injured(opponent.hp);
         haveBomb=false;

@@ -22,4 +22,9 @@ public class Dragon extends Chess {
     public int getAttackHarm() {
         return Harm;
     }
+
+    public void AfterDraw() {
+        super.AfterDraw();
+        Harm-=10;
+    }
 }
